@@ -1,0 +1,30 @@
+version: '3.5'
+
+services:
+  backend:
+    volumes:
+      - ./backend:/code
+      - pip:/usr/local/lib/python3.7/site-packages
+    command: devel_web
+    ports:
+      - "8000:8000"
+    depends_on:
+      - email
+    environment:
+      - DJANGO_SETTINGS_MODULE=settings.docker_devel
+  frontend:
+    environment:
+      - NODE_ENV=development
+    command: npm start
+    volumes:
+      - ./frontend:/code
+      - node_modules:/code/node_modules
+    ports:
+      - "3000:3000"
+  email:
+    image: python:3.7
+    command: python -m smtpd -n -c DebuggingServer 0.0.0.0:1025
+
+volumes:
+  pip:
+  node_modules:

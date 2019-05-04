@@ -1,0 +1,22 @@
+version: '3.5'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    depends_on:
+      - db
+    command: prod_web
+    ports:
+      - "80:8000"
+  frontend:
+    build:
+      context: ./frontend
+    command: npm run build_prod
+  db:
+    image: postgres:10.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
