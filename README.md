@@ -1,9 +1,15 @@
 # portAL
 
-portAL - Adventure's League community management service
-
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![Build Status](https://travis-ci.org/dnd-al-krk/portal_backend.svg?branch=master)](https://travis-ci.org/dnd-al-krk/portal_backend)
+
+portAL - Adventure's League community management service
+
+This repository is for orchestrating other services running in the portAL.
+
+Other related and used repositories are:
+- [portAL backend](https://github.com/dnd-al-krk/portal_backend) written in Python
+- [portAL frontend](https://github.com/dnd-al-krk/portal_frontend) written in React
 
 # Requirements
 
