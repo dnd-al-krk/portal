@@ -3,7 +3,7 @@
 portAL - Adventure's League community management service
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-
+[![Build Status](https://travis-ci.org/dnd-al-krk/portal_backend.svg?branch=master)](https://travis-ci.org/dnd-al-krk/portal_backend)
 
 # Requirements
 
