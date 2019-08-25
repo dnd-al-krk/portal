@@ -41,7 +41,7 @@ Admin credentials are:
 
 There are also added numerous of players/DM accounts created:
 - dmX@domain.com (e.g. dm1@domain.com)
-- userX@doman.com (e.g. user1@doman.com)
+- userX@domain.com (e.g. user1@domain.com)
 
 
 Their passwords are the same as login.
