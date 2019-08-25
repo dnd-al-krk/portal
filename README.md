@@ -43,6 +43,7 @@ There are also added numerous of players/DM accounts created:
 - dmX@domain.com (e.g. dm1@domain.com)
 - userX@doman.com (e.g. user1@doman.com)
 
+
 Their passwords are the same as login.
 
 ## Pre-generated data
@@ -59,6 +60,7 @@ We are using [black](https://github.com/ambv/black) formatter to standarize code
 1. Create local virtualenv (see manual instalation below) and install black with `pip install black`
 1. Install [pre-commit](https://pre-commit.com/)
 1. Run `$ pre-commit install` - this will install pre-commit hook to your git repository that will check code with black on commit
+1. Also we follow the pattern for branches like  `feature/123-that_was_ticket_number`. You can use `pre-commit install --hook-type commit-msg` to install tool [pre-ticket](https://github.com/deployed/pre_ticket) for automatic ticket number reference in the commit message (in the front by default).
 
 ## Testing
 
