@@ -27,7 +27,7 @@ To start developing the project:
    ```
 1. Run `$ cp docker-compose.dev.yml docker-compose.override.yml` -- this will create your own docker compose file for development. You can adjust it to your needs.
 1. Run `$ docker-compose build` - this will build necessary docker images.
-1. Run `$ docker-compose run backend bootstrap` - this will create necessary files, migrate db and import fixtures
+1. Run `$ docker-compose run --rm backend bootstrap` - this will create necessary files, migrate db and import fixtures
 
 To start development run `docker-compose up`. You can now open front-end in the browser under `localhost:3000` and backend under `localhost:8000`.
 
