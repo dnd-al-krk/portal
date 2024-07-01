@@ -29,7 +29,7 @@ To start developing the project:
 1. Run `$ docker-compose build` - this will build necessary docker images.
 1. Run `$ docker-compose run --rm backend bootstrap` - this will create necessary files, migrate db and import fixtures
 
-To start development run `docker-compose up`. You can now open front-end in the browser under `localhost:3000` and backend under `localhost:8000`.
+To start development run `docker-compose up`. You can now open front-end in the browser under `localhost:3000` and backend under `localhost:8000/admin/`.
 
 ## Pre-generated users
 
