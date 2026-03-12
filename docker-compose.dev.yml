@@ -4,7 +4,7 @@ services:
   backend:
     volumes:
       - ./backend:/code
-      - pip:/usr/local/lib/python3.7/site-packages
+      - pip:/usr/local/lib/python3.11/site-packages
     command: devel_web
     ports:
       - "8000:8000"
@@ -22,8 +22,8 @@ services:
     ports:
       - "3000:3000"
   email:
-    image: python:3.7
-    command: python -m smtpd -n -c DebuggingServer 0.0.0.0:1025
+    image: python:3.11
+    command: sh -c "pip install aiosmtpd -q && python -m aiosmtpd -n -l 0.0.0.0:1025"
 
 volumes:
   pip:
