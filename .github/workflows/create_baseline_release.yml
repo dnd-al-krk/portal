@@ -10,10 +10,9 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout monorepo migration commit
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: 5f0d3ee
           fetch-depth: 0
 
       - name: Configure git
@@ -23,7 +22,7 @@ jobs:
 
       - name: Create v3.0.0 tag
         run: |
-          git tag -a v3.0.0 -m "Release v3.0.0 - Monorepo migration baseline"
+          git tag -a v3.0.0 -m "Release v3.0.0"
           git push origin v3.0.0
 
       - name: Create GitHub release
@@ -31,14 +30,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create v3.0.0 \
-            --title "Portal v3.0.0 - Monorepo Migration" \
-            --notes "**Baseline release after monorepo migration**
+            --title "Portal v3.0.0" \
+            --notes "**First release of the unified portal monorepo**
 
-          This release marks the unification of the backend (Django) and frontend (React) repositories into a single monorepo structure.
-
-          ### Changed
-          - Migrated to monorepo structure
-          - Combined backend and frontend into single repository
-          - Established unified version tracking (VERSION file)
+          This release includes:
+          - Monorepo structure (backend + frontend)
+          - CI/CD pipelines (backend CI, backend deploy, frontend build & deploy)
+          - Pre-commit hooks (ruff formatting, YAML validation)
+          - Automated versioning and release workflows
+          - Production deployment automation
 
           **Components**: Backend + Frontend"
