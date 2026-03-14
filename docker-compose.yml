@@ -14,7 +14,11 @@ services:
       context: ./frontend
     command: npm run build_prod
   db:
-    image: postgres:10.1-alpine
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
