@@ -16,4 +16,7 @@ ROOT_URL = "http://localhost:8000"
 
 APP_URL = "http://localhost:3000"
 
-ALLOWED_HOSTS = ["localhost", "dev.rpgkrakow.pl",]
+ALLOWED_HOSTS = [
+    "localhost",
+    "dev.rpgkrakow.pl",
+]

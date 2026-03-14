@@ -1,11 +1,7 @@
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.urls import reverse
-from django_rest_passwordreset.signals import reset_password_token_created, post_password_reset
+from django_rest_passwordreset.signals import post_password_reset, reset_password_token_created
 
 from utils.email import send_email
-from .models import Profile
 
 
 @receiver(reset_password_token_created)

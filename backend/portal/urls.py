@@ -13,12 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import redirect
-from django.urls import path, include, re_path
+from django.urls import include, path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from django_rest_passwordreset import urls as reset_urls
+
 from profiles import views as profile_views
 
 
@@ -26,6 +27,7 @@ def redirect_to_frontend(request):
     """Redirect root to frontend (dev: localhost:3000, prod: rpgkrakow.pl)"""
     url = "http://localhost:3000" if settings.DEBUG else "https://rpgkrakow.pl"
     return redirect(url)
+
 
 urlpatterns = [
     path("activate/<slug:uidb64>/<slug:token>/", profile_views.activate, name="activate"),

@@ -1,14 +1,12 @@
-from unittest.mock import patch
-
 import pytest
 from django.utils import timezone
+from pytest_factoryboy import register
 
 import games
 from profiles.__tests__.factories import ProfileFactory
+
 from ..constants import ADVENTURE_TYPE_OTHER
 from .factories import AdventureFactory, GameSessionFactory, GameSessionPlayerSignUpFactory
-
-from pytest_factoryboy import register
 
 register(AdventureFactory)
 register(GameSessionFactory)

@@ -3,23 +3,22 @@ import logging
 import requests
 from django.conf import settings
 from django_filters import rest_framework as filters
-from rest_framework import viewsets, mixins, status
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import mixins, status, viewsets
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from ..models import PlayerCharacter, Profile
 from .filters import PlayerCharacterFilter
 from .permissions import IsOwnerOrReadOnly, IsProfileOwnerOrReadOnly
 from .serializers import (
+    PlayerCharacterListSerializer,
     PlayerCharacterSerializer,
     ProfileSerializer,
-    PlayerCharacterListSerializer,
-    RegisterProfileSerializer,
     PublicProfileSerializer,
+    RegisterProfileSerializer,
 )
-from ..models import PlayerCharacter, Profile
-
 
 logger = logging.getLogger(__file__)
 
@@ -75,11 +74,7 @@ class RegistrationView(APIView):
             return False
 
         url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
-        data = {
-            "secret": settings.TURNSTILE_SECRET_KEY,
-            "response": token,
-            "remoteip": request.META.get("REMOTE_ADDR")
-        }
+        data = {"secret": settings.TURNSTILE_SECRET_KEY, "response": token, "remoteip": request.META.get("REMOTE_ADDR")}
 
         response = requests.post(url, data=data)
         result = response.json()

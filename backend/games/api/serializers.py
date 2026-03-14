@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from profiles.api.serializers import PublicProfileSerializer, PublicPlayerCharacterSerializer
+from profiles.api.serializers import PublicPlayerCharacterSerializer, PublicProfileSerializer
+
 from ..models import Adventure, GameSession, GameSessionPlayerSignUp
 
 

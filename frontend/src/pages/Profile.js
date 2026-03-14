@@ -79,8 +79,8 @@ class Profile extends React.Component {
             this.props.portalStore.fetchProfileCharacters(this.state.id, false),
             this.props.portalStore.fetchProfileCharacters(this.state.id, true)
         ]
-        ).then( 
-            (char_array) => { 
+        ).then(
+            (char_array) => {
               this.setState({
                 characters: char_array[0],
                 dead_characters: char_array[1],
@@ -88,12 +88,12 @@ class Profile extends React.Component {
             }
         )
       )
-      .then( 
-        () => { 
-            this.setState( { 
-                loading: false 
-            } ) 
-        } 
+      .then(
+        () => {
+            this.setState( {
+                loading: false
+            } )
+        }
      );
   }
 

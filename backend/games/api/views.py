@@ -1,14 +1,15 @@
 from django_filters import rest_framework as filters
-from rest_framework import viewsets, mixins, status
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
-from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from profiles.models import PlayerCharacter
-from .filters import AdventureFilter, GameSessionFilter
-from .serializers import AdventureSerializer, GameSessionSerializer, GameSessionBookSerializer
+
 from ..models import Adventure, GameSession, GameSessionPlayerSignUp
+from .filters import AdventureFilter, GameSessionFilter
+from .serializers import AdventureSerializer, GameSessionBookSerializer, GameSessionSerializer
 
 
 class AdventuresViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -36,7 +37,6 @@ class GameSessionViewSet(
 
     @action(methods=["PUT"], detail=True)
     def signUp(self, request, *args, **kwargs):
-
         instance = self.get_object()
         profile = request.user.profile
         try:

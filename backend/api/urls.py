@@ -1,9 +1,9 @@
-from django.urls import re_path as url
 from django.urls import include
-from django.urls import path
+from django.urls import re_path as url
 from rest_framework.routers import DefaultRouter
-from profiles.api import views as profiles_views
+
 from games.api import views as games_views
+from profiles.api import views as profiles_views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()

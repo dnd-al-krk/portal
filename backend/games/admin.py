@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from games.utils import send_report
-from .models import Table, Adventure, GameSession, GameSessionPlayerSignUp
+
+from .models import Adventure, GameSession, GameSessionPlayerSignUp, Table
 
 
 @admin.register(Table)

@@ -37,4 +37,3 @@ export const countString = (element_name) => {
 
 
 }
-

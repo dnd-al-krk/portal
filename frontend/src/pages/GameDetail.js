@@ -37,7 +37,7 @@ const InfoTypography = styled(Typography)`
     margin-bottom: 10px;
     font-size: 1em;
   }
-  
+
 `;
 
 

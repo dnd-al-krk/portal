@@ -110,7 +110,7 @@ export class PortalStore {
   fetchProfileCharacters(owner, dead){
 
     var dead_str = (typeof dead !== 'undefined') ? `&dead=${dead ? 1 : 0}` : ``;
-    
+
     return this.api.get(`/characters/?owner=${owner}${dead_str}`).then(response => response.data);
   }
 
@@ -138,4 +138,3 @@ export class PortalStore {
     return this.api.put(`/characters/${id}/`, data);
   }
 }
-

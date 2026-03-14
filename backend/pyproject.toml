@@ -1,3 +1,13 @@
-[tool.black]
+[tool.ruff]
 line-length = 120
-exclude = '/(front|docker)/'
+target-version = "py311"
+exclude = ["migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+"settings/*.py" = ["F403", "F405", "E731"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["portal", "games", "profiles", "api", "utils"]

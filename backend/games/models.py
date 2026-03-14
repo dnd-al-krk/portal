@@ -1,36 +1,42 @@
 from __future__ import annotations
 
+import datetime
+import time
+from typing import TYPE_CHECKING
+
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-import datetime
-import time
 
 from utils.discord import send_discord_game_notification
 from utils.email import send_email
+from utils.models import UUIDModel
+
+if TYPE_CHECKING:
+    from profiles.models import Profile
+
 from .constants import (
-    ADVENTURE_TYPE_EX,
-    ADVENTURE_TYPE_EN,
-    ADVENTURE_TYPE_EP,
-    ADVENTURE_TYPE_HC,
-    ADVENTURE_TYPE_IA,
-    ADVENTURE_TYPE_LE,
-    ADVENTURE_TYPE_CCC,
-    ADVENTURE_TYPE_OTHER,
-    ADVENTURE_TYPE_AO,
-    ADVENTURE_TYPE_AL,
     ADVENTURE_TIER1,
     ADVENTURE_TIER2,
     ADVENTURE_TIER3,
-    ADVENTURE_TIER4, MINIMUM_PLAYERS_COUNT, ONLINE_TABLE_NAME,
+    ADVENTURE_TIER4,
+    ADVENTURE_TYPE_AL,
+    ADVENTURE_TYPE_AO,
+    ADVENTURE_TYPE_CCC,
+    ADVENTURE_TYPE_EN,
+    ADVENTURE_TYPE_EP,
+    ADVENTURE_TYPE_EX,
+    ADVENTURE_TYPE_HC,
+    ADVENTURE_TYPE_IA,
+    ADVENTURE_TYPE_LE,
+    ADVENTURE_TYPE_OTHER,
+    MINIMUM_PLAYERS_COUNT,
+    ONLINE_TABLE_NAME,
 )
-from utils.models import UUIDModel
-
 
 
 class TableManager(models.Manager):
-
     def get_online(self):
         return self.get_queryset().get(name=ONLINE_TABLE_NAME)
 
@@ -145,15 +151,9 @@ class GameSessionActiveGamesManager(models.Manager):
 
 
 class GameSessionManager(models.Manager):
-
     def recreate_online_game(self, game):
         online_table = Table.objects.get_online()
-        self.get_or_create(
-            date=game.date,
-            table=online_table,
-            active=True,
-            spots=online_table.max_spots
-        )
+        self.get_or_create(date=game.date, table=online_table, active=True, spots=online_table.max_spots)
 
 
 class GameSession(UUIDModel):
@@ -252,14 +252,14 @@ class GameSession(UUIDModel):
                 bcc=[player.user.email for player in self.players.all()] + [self.dm.user.email],
             )
             send_discord_game_notification(
-                self.format_discord_message("Po zwolnieniu miejsca w grze brakuje minimalnej ilości graczy. Rozważ dołączenie.")
+                self.format_discord_message(
+                    "Po zwolnieniu miejsca w grze brakuje minimalnej ilości graczy. Rozważ dołączenie."
+                )
             )
 
     def check_last_spot_notify(self):
         if self.players.count() == (self.spots - 1):
-            send_discord_game_notification(
-                self.format_discord_message("Zwolniono jedno miejsce dla gry.")
-            )
+            send_discord_game_notification(self.format_discord_message("Zwolniono jedno miejsce dla gry."))
 
     def cancel(self):
         self.dm = None

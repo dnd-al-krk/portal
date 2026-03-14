@@ -90,7 +90,6 @@ class TestRegistrationSerializer:
 
 class TestRegistrationUserSerializer:
     def test_password_length_check(self):
-
         data = {"first_name": "Some", "last_name": "Person", "password": "short", "email": "some@email.com"}
 
         serializer = RegisterUserSerializer(data=data)

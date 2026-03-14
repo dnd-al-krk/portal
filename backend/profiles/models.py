@@ -6,12 +6,12 @@ from django.utils.translation import gettext_lazy as _
 
 from utils.email import send_email
 from utils.models import UUIDModel
+
 from .constants import ROLE_DM, ROLE_PLAYER
 from .utils import account_activation_token
 
 
 class Profile(models.Model):
-
     USER_TYPE = ((ROLE_DM, "Dungeon Master"), (ROLE_PLAYER, "Player"))
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")

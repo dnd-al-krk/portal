@@ -6,4 +6,4 @@ class ProfilesConfig(AppConfig):
     verbose_name = "Profiles of Players"
 
     def ready(self):
-        from . import signals
+        pass
