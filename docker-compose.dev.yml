@@ -10,6 +10,7 @@ services:
       - "8000:8000"
     depends_on:
       - email
+      - db
     environment:
       - DJANGO_SETTINGS_MODULE=settings.docker_devel
   frontend:
