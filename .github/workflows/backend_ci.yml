@@ -1,0 +1,45 @@
+name: Backend CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - backend/**
+  pull_request:
+    paths:
+      - backend/**
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ruff
+        run: pip install ruff==0.9.10
+      - name: Run ruff check
+        run: ruff check backend/
+      - name: Run ruff format check
+        run: ruff format --check backend/
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements/devel.txt
+          pip install pytest-cov
+      - name: Run tests with coverage
+        working-directory: backend
+        run: pytest --cov --cov-report=term-missing

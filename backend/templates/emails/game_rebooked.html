@@ -1,0 +1,18 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+{% autoescape off %}
+    <p>Looks like your cancelled game has a new Dungeon Master. Here are you game details</p>
+
+    <ul>
+        <li><strong>Adventure name</strong>: {{ game.adventure }}</li>
+        <li><strong>Game date</strong>: {{ game.date|date:"l, d. E Y" }}, {{ game.time_start|time:"H:i" }}</li>
+        <li><strong>Table</strong>: {{ game.table }}</li>
+    </ul>
+
+    <p>You can see more <a href="{{ game.get_absolute_url }}">on the game page.</a></p>
+
+    <p>If you no longer want to attend that game session, unsign on it's page.</p>
+
+{% endautoescape %}
+{% endblock %}

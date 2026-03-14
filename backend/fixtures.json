@@ -1,0 +1,807 @@
+[
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$dTujXBczuilN$8E7kRrBaqlr0JZ+9chKKM8gZ19jux+7LhPWI+//fFAs=",
+        "last_login": "2019-02-10T21:40:09Z",
+        "is_superuser": true,
+        "username": "admin@domain.com",
+        "first_name": "Admin",
+        "last_name": "Adminame",
+        "email": "admin@domain.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-07-28T14:34:36Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 27,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$mUJLtbyRLJpF$BiDAlxeMkvE6Uvlc5YAQ261SC4Pc4Sy9qf6tekJSlWM=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user1@domain.com",
+        "first_name": "user1",
+        "last_name": "one",
+        "email": "user1@domain.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-10T21:53:23Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 28,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$HH6eBOp4pMck$jKFvqxOMueMMq+Zn2EjOXF5njhVet/Bb5PTIFfzDJTU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user2@domain.com",
+        "first_name": "user2",
+        "last_name": "lastname",
+        "email": "user2@domain.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-10T21:53:59Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 29,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$tFqY6In7TL96$gJE1BLIjlaYDLDEZZRWbLkl6nBh7JeKcpK6RBP4tn9Y=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user3@domain.com",
+        "first_name": "User3",
+        "last_name": "Lastname",
+        "email": "user3@domain.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-10T21:54:24Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 30,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$o6Cfr93WOBi8$TfQEQ2L3lDPJbFQqJ83zUfU3z5CRnoISfHNe5AGYXM8=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dm1@domain.com",
+        "first_name": "D",
+        "last_name": "M1",
+        "email": "dm1@domain.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-10T22:00:13Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 31,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$pWoaqgOaNKWD$E+eabbHgrJqUFoNP0Iyh9IQEH6s22CLzGG4KXRRoZHo=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dm2@domain.com",
+        "first_name": "D",
+        "last_name": "M2",
+        "email": "dm2@domain.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-10T22:00:33Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 32,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$t5Kg99ooBvic$dOia28uz80+7AmW7YusAp6ZWMyioJ1ulYIrNtf7S3BA=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dm3@domain.com",
+        "first_name": "D",
+        "last_name": "M3",
+        "email": "dm3@domain.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-10T22:00:50Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "profiles.profile",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "nickname": "Adminickname",
+        "dci": "999888777",
+        "role": "dm"
+    }
+},
+{
+    "model": "profiles.profile",
+    "pk": 27,
+    "fields": {
+        "user": 27,
+        "nickname": "userOne",
+        "dci": "123123123",
+        "role": "player"
+    }
+},
+{
+    "model": "profiles.profile",
+    "pk": 28,
+    "fields": {
+        "user": 28,
+        "nickname": "userTwo",
+        "dci": "321321321",
+        "role": "player"
+    }
+},
+{
+    "model": "profiles.profile",
+    "pk": 29,
+    "fields": {
+        "user": 29,
+        "nickname": "UserThree",
+        "dci": "101202303",
+        "role": "player"
+    }
+},
+{
+    "model": "profiles.profile",
+    "pk": 30,
+    "fields": {
+        "user": 30,
+        "nickname": "DM1",
+        "dci": "101010101",
+        "role": "dm"
+    }
+},
+{
+    "model": "profiles.profile",
+    "pk": 31,
+    "fields": {
+        "user": 31,
+        "nickname": "DM2",
+        "dci": "202020202",
+        "role": "dm"
+    }
+},
+{
+    "model": "profiles.profile",
+    "pk": 32,
+    "fields": {
+        "user": 32,
+        "nickname": "DM3",
+        "dci": "303030303",
+        "role": "dm"
+    }
+},
+{
+    "model": "profiles.playercharacter",
+    "pk": "880ce93d-37c3-4c61-b985-a5b110ad4eab",
+    "fields": {
+        "owner": 27,
+        "name": "Char 1",
+        "pc_class": "Class 1",
+        "race": "Race 1",
+        "faction": null,
+        "level": 1,
+        "notes": "",
+        "created": "2019-02-10T22:10:37.276Z",
+        "modified": "2019-02-10T22:10:37.276Z"
+    }
+},
+{
+    "model": "profiles.playercharacter",
+    "pk": "dc736b0f-42f3-40c1-bdc6-60105ddbe1c5",
+    "fields": {
+        "owner": 29,
+        "name": "Char 3",
+        "pc_class": "Class 3",
+        "race": "Race 3",
+        "faction": null,
+        "level": 3,
+        "notes": "",
+        "created": "2019-02-10T22:10:53.383Z",
+        "modified": "2019-02-10T22:10:53.383Z"
+    }
+},
+{
+    "model": "profiles.playercharacter",
+    "pk": "ef60de10-eed6-46f4-9462-8ee020a57756",
+    "fields": {
+        "owner": 28,
+        "name": "Char 2",
+        "pc_class": "Class 2",
+        "race": "Race 2",
+        "faction": null,
+        "level": 1,
+        "notes": "",
+        "created": "2019-02-10T22:10:44.080Z",
+        "modified": "2019-02-10T22:10:44.080Z"
+    }
+},
+{
+    "model": "games.table",
+    "pk": "5884ec22-c2af-4be8-8e96-da01081288e0",
+    "fields": {
+        "name": "Table 1",
+        "max_spots": 7
+    }
+},
+{
+    "model": "games.table",
+    "pk": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+    "fields": {
+        "name": "Table 2",
+        "max_spots": 5
+    }
+},
+{
+    "model": "games.table",
+    "pk": "f083fc53-92f7-4450-a207-2f92e6010543",
+    "fields": {
+        "name": "Table 3",
+        "max_spots": 4
+    }
+},
+{
+    "model": "games.adventure",
+    "pk": "41dccf55-f405-4fe3-85a5-cab16081592a",
+    "fields": {
+        "season": 0,
+        "number": 0,
+        "title": "Welcome to Phlan",
+        "type": 10
+    }
+},
+{
+    "model": "games.adventure",
+    "pk": "61b6fb50-5131-40de-b057-83114bb46843",
+    "fields": {
+        "season": 2,
+        "number": 1,
+        "title": "City of Danger",
+        "type": 1
+    }
+},
+{
+    "model": "games.adventure",
+    "pk": "7193a7b5-5a8e-4138-925e-b88d3a578eae",
+    "fields": {
+        "season": 1,
+        "number": 1,
+        "title": "Season-1-Adventure-Number-1",
+        "type": 10
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "0267d725-97b3-45b5-9868-e96ab876a9b7",
+    "fields": {
+        "date": "2030-02-11",
+        "table": "5884ec22-c2af-4be8-8e96-da01081288e0",
+        "dm": 30,
+        "adventure": "41dccf55-f405-4fe3-85a5-cab16081592a",
+        "spots": 5,
+        "notes": null,
+        "time_start": "11:00:00",
+        "time_end": "18:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "3f2481c6-4964-463c-89cc-c505e2d40c62",
+    "fields": {
+        "date": "2010-04-04",
+        "table": "5884ec22-c2af-4be8-8e96-da01081288e0",
+        "dm": 32,
+        "adventure": "61b6fb50-5131-40de-b057-83114bb46843",
+        "spots": 5,
+        "notes": null,
+        "time_start": "14:00:00",
+        "time_end": "20:00:00",
+        "active": true,
+        "reported": true,
+        "report_time": "2010-04-07T21:00:00Z",
+        "extra_players": "999666333"
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "4002f7d8-8f76-481a-96fd-5d7ce707e0c8",
+    "fields": {
+        "date": "2030-02-12",
+        "table": "5884ec22-c2af-4be8-8e96-da01081288e0",
+        "dm": 31,
+        "adventure": "7193a7b5-5a8e-4138-925e-b88d3a578eae",
+        "spots": 5,
+        "notes": null,
+        "time_start": "16:00:00",
+        "time_end": "23:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "4974d09c-6b16-4117-9620-af6d063b263b",
+    "fields": {
+        "date": "2030-02-14",
+        "table": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": "Inactive",
+        "time_start": null,
+        "time_end": null,
+        "active": false,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "4b934156-86ee-48e5-8125-11df3e47e803",
+    "fields": {
+        "date": "2030-02-12",
+        "table": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+        "dm": 30,
+        "adventure": "61b6fb50-5131-40de-b057-83114bb46843",
+        "spots": 5,
+        "notes": null,
+        "time_start": "12:00:00",
+        "time_end": "18:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "57a4372f-3cbc-4068-a151-249c54a30995",
+    "fields": {
+        "date": "2010-04-01",
+        "table": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+        "dm": 31,
+        "adventure": "7193a7b5-5a8e-4138-925e-b88d3a578eae",
+        "spots": 5,
+        "notes": null,
+        "time_start": "15:00:00",
+        "time_end": "22:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "59ed4d22-9fa5-46c9-8845-485fd83d2e03",
+    "fields": {
+        "date": "2010-04-04",
+        "table": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+        "dm": 31,
+        "adventure": "7193a7b5-5a8e-4138-925e-b88d3a578eae",
+        "spots": 5,
+        "notes": null,
+        "time_start": "15:00:00",
+        "time_end": "21:00:00",
+        "active": true,
+        "reported": true,
+        "report_time": "2010-04-07T13:00:00Z",
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "5f429678-1a8c-4f87-9010-734d3f428608",
+    "fields": {
+        "date": "2030-02-10",
+        "table": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": null,
+        "time_start": null,
+        "time_end": null,
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "85ffdf13-3c0f-4808-bda5-91ad469dbf75",
+    "fields": {
+        "date": "2010-04-01",
+        "table": "5884ec22-c2af-4be8-8e96-da01081288e0",
+        "dm": 32,
+        "adventure": "61b6fb50-5131-40de-b057-83114bb46843",
+        "spots": 5,
+        "notes": null,
+        "time_start": "14:00:00",
+        "time_end": "20:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "a6c354db-718e-4b8e-9a4b-ff4962e0aa7f",
+    "fields": {
+        "date": "2030-02-10",
+        "table": "5884ec22-c2af-4be8-8e96-da01081288e0",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": null,
+        "time_start": null,
+        "time_end": null,
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "a701f82a-6339-4703-9caa-0bcb5ee9eb99",
+    "fields": {
+        "date": "2010-04-03",
+        "table": "5884ec22-c2af-4be8-8e96-da01081288e0",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": null,
+        "time_start": null,
+        "time_end": null,
+        "active": false,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "aaabecce-3cae-48b5-87f6-1662d0ec4743",
+    "fields": {
+        "date": "2010-04-03",
+        "table": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": null,
+        "time_start": null,
+        "time_end": null,
+        "active": false,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "b18f96f1-ef7c-4ef0-95ef-6e27d9b66b0c",
+    "fields": {
+        "date": "2010-04-02",
+        "table": "5884ec22-c2af-4be8-8e96-da01081288e0",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": null,
+        "time_start": null,
+        "time_end": null,
+        "active": false,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "c10f26b5-f00d-49f9-918d-7b9b1a2e4302",
+    "fields": {
+        "date": "2010-04-01",
+        "table": "f083fc53-92f7-4450-a207-2f92e6010543",
+        "dm": 30,
+        "adventure": "41dccf55-f405-4fe3-85a5-cab16081592a",
+        "spots": 5,
+        "notes": null,
+        "time_start": "16:00:00",
+        "time_end": "21:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "e063ef12-8768-4b15-8c55-527fe2b42092",
+    "fields": {
+        "date": "2030-02-10",
+        "table": "f083fc53-92f7-4450-a207-2f92e6010543",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": null,
+        "time_start": null,
+        "time_end": null,
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "e0920391-9f15-4e5b-91a5-18120a759968",
+    "fields": {
+        "date": "2010-04-04",
+        "table": "f083fc53-92f7-4450-a207-2f92e6010543",
+        "dm": 30,
+        "adventure": "41dccf55-f405-4fe3-85a5-cab16081592a",
+        "spots": 5,
+        "notes": null,
+        "time_start": "16:00:00",
+        "time_end": "22:00:00",
+        "active": true,
+        "reported": true,
+        "report_time": "2010-04-07T12:00:00Z",
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "e910c450-0ec2-46a7-b050-34b4bf3dac35",
+    "fields": {
+        "date": "2010-04-02",
+        "table": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": null,
+        "time_start": null,
+        "time_end": null,
+        "active": false,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "e92dbc31-83cd-4c74-80f7-f1cd85e0a8c1",
+    "fields": {
+        "date": "2010-04-03",
+        "table": "f083fc53-92f7-4450-a207-2f92e6010543",
+        "dm": null,
+        "adventure": null,
+        "spots": 5,
+        "notes": null,
+        "time_start": null,
+        "time_end": null,
+        "active": false,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "ea777b97-0cb3-4d90-bfde-98c6c7b90677",
+    "fields": {
+        "date": "2030-02-14",
+        "table": "5884ec22-c2af-4be8-8e96-da01081288e0",
+        "dm": 30,
+        "adventure": "61b6fb50-5131-40de-b057-83114bb46843",
+        "spots": 5,
+        "notes": "Inactive",
+        "time_start": "16:00:00",
+        "time_end": "20:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "f596ab45-3f50-4bff-91a7-f68b2b0ad424",
+    "fields": {
+        "date": "2030-02-11",
+        "table": "f083fc53-92f7-4450-a207-2f92e6010543",
+        "dm": 32,
+        "adventure": "61b6fb50-5131-40de-b057-83114bb46843",
+        "spots": 5,
+        "notes": null,
+        "time_start": "11:00:00",
+        "time_end": "18:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesession",
+    "pk": "f83aebb5-522a-4252-a021-d3fc2c2573ab",
+    "fields": {
+        "date": "2030-02-11",
+        "table": "9ea96159-1ff5-4fe7-8d46-72765e81fd70",
+        "dm": 31,
+        "adventure": "7193a7b5-5a8e-4138-925e-b88d3a578eae",
+        "spots": 5,
+        "notes": null,
+        "time_start": "11:00:00",
+        "time_end": "18:00:00",
+        "active": true,
+        "reported": false,
+        "report_time": null,
+        "extra_players": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 26,
+    "fields": {
+        "game": "c10f26b5-f00d-49f9-918d-7b9b1a2e4302",
+        "player": 27,
+        "created": "2019-02-10T22:16:16.082Z",
+        "character": "880ce93d-37c3-4c61-b985-a5b110ad4eab",
+        "reported": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 27,
+    "fields": {
+        "game": "57a4372f-3cbc-4068-a151-249c54a30995",
+        "player": 28,
+        "created": "2019-02-10T22:16:23.020Z",
+        "character": "ef60de10-eed6-46f4-9462-8ee020a57756",
+        "reported": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 28,
+    "fields": {
+        "game": "85ffdf13-3c0f-4808-bda5-91ad469dbf75",
+        "player": 29,
+        "created": "2019-02-10T22:16:29.142Z",
+        "character": "dc736b0f-42f3-40c1-bdc6-60105ddbe1c5",
+        "reported": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 29,
+    "fields": {
+        "game": "3f2481c6-4964-463c-89cc-c505e2d40c62",
+        "player": 27,
+        "created": "2019-02-10T22:16:38.731Z",
+        "character": "880ce93d-37c3-4c61-b985-a5b110ad4eab",
+        "reported": true
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 30,
+    "fields": {
+        "game": "59ed4d22-9fa5-46c9-8845-485fd83d2e03",
+        "player": 28,
+        "created": "2019-02-10T22:16:44.551Z",
+        "character": "ef60de10-eed6-46f4-9462-8ee020a57756",
+        "reported": true
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 31,
+    "fields": {
+        "game": "e0920391-9f15-4e5b-91a5-18120a759968",
+        "player": 29,
+        "created": "2019-02-10T22:16:50.908Z",
+        "character": "dc736b0f-42f3-40c1-bdc6-60105ddbe1c5",
+        "reported": true
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 32,
+    "fields": {
+        "game": "ea777b97-0cb3-4d90-bfde-98c6c7b90677",
+        "player": 27,
+        "created": "2019-02-10T22:23:56.466Z",
+        "character": "880ce93d-37c3-4c61-b985-a5b110ad4eab",
+        "reported": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 34,
+    "fields": {
+        "game": "4002f7d8-8f76-481a-96fd-5d7ce707e0c8",
+        "player": 28,
+        "created": "2019-02-10T22:25:33.910Z",
+        "character": "ef60de10-eed6-46f4-9462-8ee020a57756",
+        "reported": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 35,
+    "fields": {
+        "game": "4b934156-86ee-48e5-8125-11df3e47e803",
+        "player": 27,
+        "created": "2019-02-10T22:25:48.561Z",
+        "character": "880ce93d-37c3-4c61-b985-a5b110ad4eab",
+        "reported": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 36,
+    "fields": {
+        "game": "0267d725-97b3-45b5-9868-e96ab876a9b7",
+        "player": 29,
+        "created": "2019-02-10T22:26:01.411Z",
+        "character": "dc736b0f-42f3-40c1-bdc6-60105ddbe1c5",
+        "reported": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 37,
+    "fields": {
+        "game": "f83aebb5-522a-4252-a021-d3fc2c2573ab",
+        "player": 28,
+        "created": "2019-02-10T22:26:09.703Z",
+        "character": "ef60de10-eed6-46f4-9462-8ee020a57756",
+        "reported": null
+    }
+},
+{
+    "model": "games.gamesessionplayersignup",
+    "pk": 38,
+    "fields": {
+        "game": "f596ab45-3f50-4bff-91a7-f68b2b0ad424",
+        "player": 27,
+        "created": "2019-02-10T22:26:19.322Z",
+        "character": "880ce93d-37c3-4c61-b985-a5b110ad4eab",
+        "reported": null
+    }
+}
+]
