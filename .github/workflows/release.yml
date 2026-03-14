@@ -1,0 +1,214 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+      custom_version:
+        description: 'Custom version (optional, e.g., 4.0.0 - overrides bump_type)'
+        required: false
+        type: string
+      draft:
+        description: 'Create as draft release'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine version and component
+        id: version
+        run: |
+          # Read current version
+          CURRENT_VERSION=$(cat VERSION)
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+          # Parse version components
+          IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+
+          # Determine new version (manual trigger only)
+          TRIGGER="manual"
+          if [ -n "${{ inputs.custom_version }}" ]; then
+            NEW_VERSION="${{ inputs.custom_version }}"
+          else
+            case "${{ inputs.bump_type }}" in
+              major)
+                NEW_VERSION="$((major+1)).0.0"
+                ;;
+              minor)
+                NEW_VERSION="$major.$((minor+1)).0"
+                ;;
+              patch)
+                NEW_VERSION="$major.$minor.$((patch+1))"
+                ;;
+            esac
+          fi
+
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "trigger=$TRIGGER" >> $GITHUB_OUTPUT
+
+          # Check if tag already exists (prevent duplicates)
+          if git tag -l "v$NEW_VERSION" | grep -q "v$NEW_VERSION"; then
+            echo "Tag v$NEW_VERSION already exists, skipping release"
+            echo "skip=true" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+          # Detect which components changed since last tag
+          COMPONENT="unknown"
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$LAST_TAG" ]; then
+            BACKEND_CHANGED=$(git diff $LAST_TAG..HEAD --name-only | grep -c '^backend/' || true)
+            FRONTEND_CHANGED=$(git diff $LAST_TAG..HEAD --name-only | grep -c '^frontend/' || true)
+
+            if [ "$BACKEND_CHANGED" -gt 0 ] && [ "$FRONTEND_CHANGED" -gt 0 ]; then
+              COMPONENT="both"
+            elif [ "$BACKEND_CHANGED" -gt 0 ]; then
+              COMPONENT="backend"
+            elif [ "$FRONTEND_CHANGED" -gt 0 ]; then
+              COMPONENT="frontend"
+            fi
+          else
+            COMPONENT="both"
+          fi
+
+          echo "component=$COMPONENT" >> $GITHUB_OUTPUT
+          echo "Creating release v$NEW_VERSION (trigger: $TRIGGER, component: $COMPONENT)"
+
+      - name: Update version files
+        if: steps.version.outputs.skip != 'true'
+        run: |
+          NEW_VERSION="${{ steps.version.outputs.new_version }}"
+
+          # Update VERSION file
+          echo "$NEW_VERSION" > VERSION
+
+          # Update frontend package.json
+          cd frontend
+          npm version "$NEW_VERSION" --no-git-tag-version --allow-same-version
+          cd ..
+
+          # Update backend __init__.py
+          echo "__version__ = \"$NEW_VERSION\"" > backend/portal/__init__.py
+
+          echo "Updated version files to $NEW_VERSION"
+
+      - name: Update CHANGELOG
+        if: steps.version.outputs.skip != 'true'
+        run: |
+          NEW_VERSION="${{ steps.version.outputs.new_version }}"
+          COMPONENT="${{ steps.version.outputs.component }}"
+          DATE=$(date +%Y-%m-%d)
+
+          # Get commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$LAST_TAG" ]; then
+            COMMITS=$(git log $LAST_TAG..HEAD --oneline --no-merges)
+          else
+            COMMITS=$(git log --oneline --no-merges -n 10)
+          fi
+
+          # Create temporary changelog entry
+          cat > /tmp/changelog_entry.md << EOF
+
+          ## [$NEW_VERSION] - $DATE
+
+          $(echo "$COMMITS" | sed 's/^[a-f0-9]* /- /')
+
+          **Components**: $COMPONENT
+
+          [$NEW_VERSION]: https://github.com/${{ github.repository }}/releases/tag/v$NEW_VERSION
+          EOF
+
+          # Insert after "# Changelog" header
+          sed -i "/^# Changelog/r /tmp/changelog_entry.md" CHANGELOG.md
+
+          echo "Updated CHANGELOG.md"
+
+      - name: Commit version bump
+        if: steps.version.outputs.skip != 'true'
+        run: |
+          NEW_VERSION="${{ steps.version.outputs.new_version }}"
+
+          git add VERSION frontend/package.json backend/portal/__init__.py CHANGELOG.md
+          git commit -m "chore: bump version to v$NEW_VERSION"
+          git push origin HEAD:${{ github.ref_name }}
+
+      - name: Create and push tag
+        if: steps.version.outputs.skip != 'true'
+        run: |
+          NEW_VERSION="${{ steps.version.outputs.new_version }}"
+
+          git tag -a "v$NEW_VERSION" -m "Release v$NEW_VERSION"
+          git push origin "v$NEW_VERSION"
+
+      - name: Create GitHub release
+        if: steps.version.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          NEW_VERSION="${{ steps.version.outputs.new_version }}"
+          COMPONENT="${{ steps.version.outputs.component }}"
+          LAST_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+
+          # Build release command
+          RELEASE_CMD="gh release create v$NEW_VERSION --title \"Portal v$NEW_VERSION\""
+
+          # Add component info to notes
+          RELEASE_CMD="$RELEASE_CMD --notes \"**Components**: $COMPONENT\""
+
+          # Add auto-generated notes
+          if [ -n "$LAST_TAG" ]; then
+            RELEASE_CMD="$RELEASE_CMD --generate-notes --notes-start-tag $LAST_TAG"
+          else
+            RELEASE_CMD="$RELEASE_CMD --generate-notes"
+          fi
+
+          # Add draft flag if requested
+          if [ "${{ inputs.draft }}" = "true" ]; then
+            RELEASE_CMD="$RELEASE_CMD --draft"
+          fi
+
+          # Execute release creation
+          eval $RELEASE_CMD
+
+          echo "Created release v$NEW_VERSION"
+
+      - name: Release summary
+        if: steps.version.outputs.skip != 'true'
+        run: |
+          NEW_VERSION="${{ steps.version.outputs.new_version }}"
+          COMPONENT="${{ steps.version.outputs.component }}"
+
+          echo "## Release Created! 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: v$NEW_VERSION" >> $GITHUB_STEP_SUMMARY
+          echo "- **Components**: $COMPONENT" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger**: ${{ steps.version.outputs.trigger }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Release URL**: https://github.com/${{ github.repository }}/releases/tag/v$NEW_VERSION" >> $GITHUB_STEP_SUMMARY
