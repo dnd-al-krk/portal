@@ -55,8 +55,8 @@ jobs:
           key: ${{ secrets.KEY }}
           username: ${{ secrets.USERNAME }}
           script: |
-            cp -a ${{ secrets.DEPLOY_DIR }} ${{ secrets.DEPLOY_DIR }}.bak-`date +"%s"`
-            rm -rf ${{ secrets.DEPLOY_DIR }}/*
+            cp -a ${{ secrets.FRONTEND_DEPLOY_DIR }} ${{ secrets.FRONTEND_DEPLOY_DIR }}.bak-`date +"%s"`
+            rm -rf ${{ secrets.FRONTEND_DEPLOY_DIR }}/*
 
       - name: Sending files to production
         uses: appleboy/scp-action@v0.1.7
@@ -65,7 +65,7 @@ jobs:
           key: ${{ secrets.KEY }}
           username: ${{ secrets.USERNAME }}
           source: "*"
-          target: ${{ secrets.DEPLOY_DIR }}
+          target: ${{ secrets.FRONTEND_DEPLOY_DIR }}
 
       - name: Updating config
         uses: appleboy/ssh-action@v1.0.3
@@ -74,4 +74,4 @@ jobs:
           key: ${{ secrets.KEY }}
           username: ${{ secrets.USERNAME }}
           script: |
-            cp -a ${{ secrets.DEPLOY_DIR }}/../.htaccess ${{ secrets.DEPLOY_DIR }}/
+            cp -a ${{ secrets.FRONTEND_DEPLOY_DIR }}/../.htaccess ${{ secrets.FRONTEND_DEPLOY_DIR }}/
