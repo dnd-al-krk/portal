@@ -25,4 +25,14 @@ bootstrap(){
     fi
 }
 
+test(){
+    pip install -r requirements/devel.txt
+    python -m pytest -v --cov --cov-report=term-missing "$@"
+}
+
+test_watch(){
+    pip install -r requirements/devel.txt
+    python -m pytest_watch -- -v "$@"
+}
+
 $@

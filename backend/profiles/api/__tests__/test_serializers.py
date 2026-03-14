@@ -1,7 +1,10 @@
+import pytest
+
 from ..serializers import RegisterProfileSerializer, RegisterUserSerializer
 
 
 class TestRegistrationSerializer:
+    @pytest.mark.django_db
     def test_registration_data(self):
         data = {
             "user": {
@@ -72,6 +75,7 @@ class TestRegistrationSerializer:
 
         assert not serializer.is_valid()
 
+    @pytest.mark.django_db
     def test_empty_nickname(self):
         data = {
             "user": {

@@ -4,7 +4,8 @@ from rest_framework.test import APIClient
 
 class TestRegistrationView:
     @pytest.mark.django_db
-    def test_registration_done(self):
+    def test_registration_done(self, mocker):
+        mocker.patch("profiles.api.views.RegistrationView._verify_turnstile", return_value=True)
         client = APIClient()
         data = {
             "user": {

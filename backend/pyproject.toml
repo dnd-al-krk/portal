@@ -11,3 +11,18 @@ select = ["E", "F", "I"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["portal", "games", "profiles", "api", "utils"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "settings.devel"
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--tb=short"
+
+[tool.coverage.run]
+source = ["games", "profiles", "api", "portal"]
+omit = ["*/migrations/*", "*/__tests__/*", "*/management/*"]
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
