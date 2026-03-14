@@ -1,0 +1,20 @@
+{% extends 'emails/base.html' %}
+
+{% block greetings %}
+    Hi {{ user.first_name }} {{ user.last_name }},
+{% endblock %}
+
+{% block content %}
+{% autoescape off %}
+    <p>
+        Welcome to the Organized Play Kraków system.
+        The adventure awaits. All you have to do is
+        <a href="https://api.rpgkrakow.pl{% url 'activate' uid token %}">confirm your registration.</a>
+    </p>
+
+    <p>
+        See you at the next game session.
+    </p>
+
+{% endautoescape %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+{% autoescape off %}
+    <p>Looks like a player cancelled his sign up for a game. There's not enough players to run the game currently.
+        As a result it may be cancelled. Be sure to check the website before you come to a game session.</p>
+
+    <ul>
+        <li><strong>Adventure name</strong>: {{ game.adventure }}</li>
+        <li><strong>Game date</strong>: {{ game.date|date:"l, d. E Y" }}, {{ game.time_start|time:"H:i" }}</li>
+        <li><strong>Table</strong>: {{ game.table }}</li>
+    </ul>
+
+    <p>You can see more <a href="{{ game.get_absolute_url }}">on the game page.</a></p>
+
+    <p>If you no longer want to attend that game session, unsign on it's page.</p>
+
+{% endautoescape %}
+{% endblock %}

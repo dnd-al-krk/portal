@@ -1,0 +1,77 @@
+name: Build and Deploy Frontend
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - frontend/src/**
+      - frontend/package.json
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setting up node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Installing dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Building the project
+        working-directory: frontend
+        run: npm run build_prod
+        env:
+          CI: ""
+
+      - name: Uploading artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: "frontend/build/*"
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+    needs: build
+    steps:
+      - name: Pulling build files
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: ""
+
+      - name: Backing up the previous build
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.KEY }}
+          username: ${{ secrets.USERNAME }}
+          script: |
+            cp -a ${{ secrets.DEPLOY_DIR }} ${{ secrets.DEPLOY_DIR }}.bak-`date +"%s"`
+            rm -rf ${{ secrets.DEPLOY_DIR }}/*
+
+      - name: Sending files to production
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.KEY }}
+          username: ${{ secrets.USERNAME }}
+          source: "*"
+          target: ${{ secrets.DEPLOY_DIR }}
+
+      - name: Updating config
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.KEY }}
+          username: ${{ secrets.USERNAME }}
+          script: |
+            cp -a ${{ secrets.DEPLOY_DIR }}/../.htaccess ${{ secrets.DEPLOY_DIR }}/

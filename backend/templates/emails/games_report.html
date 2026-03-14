@@ -1,0 +1,18 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+{% autoescape off %}
+    <p>This is the list of games reported by DMs and their players</p>
+
+    {% for game in games %}
+    <p>
+        Date: {{ game.date }}<br/>
+        DM: {{ game.dm }}<br/>
+        Players:
+        {% for player in game.players %}
+            {{ player }}{% if not forloop.last %},{% endif %}{% endfor %}{% if game.extra_players %}, {{ game.extra_players }}{% endif %}
+    </p>
+    {% endfor %}
+
+{% endautoescape %}
+{% endblock %}

@@ -109,6 +109,11 @@ db.sqlite3
 
 .DS_Store
 
-frontend/*
-backend/*
-docker-compose.override.yml
+# Node
+node_modules/
+**/node_modules/
+
+# Frontend build artifacts
+frontend/build/
+
+compose.override.yml

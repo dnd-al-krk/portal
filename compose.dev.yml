@@ -1,7 +1,7 @@
-version: '3.5'
-
 services:
   backend:
+    build:
+      context: ./backend
     volumes:
       - ./backend:/code
       - pip:/usr/local/lib/python3.11/site-packages
@@ -14,6 +14,8 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=settings.docker_devel
   frontend:
+    build:
+      context: ./frontend
     environment:
       - NODE_ENV=development
     command: npm start
@@ -25,7 +27,16 @@ services:
   email:
     image: python:3.11
     command: sh -c "pip install aiosmtpd -q && python -m aiosmtpd -n -l 0.0.0.0:1025"
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
 
 volumes:
+  postgres_data:
   pip:
   node_modules:
