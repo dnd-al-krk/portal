@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.1.0] - 2026-03-21
+
+- feat: added pagination for past games list
+
+**Components**: both
+
+[3.1.0]: https://github.com/dnd-al-krk/portal/releases/tag/v3.1.0
+
 ## [3.0.1] - 2026-03-14
 
 - maint: replace bot token with PAT for allowing the direct push to master
