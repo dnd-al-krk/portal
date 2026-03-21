@@ -210,4 +210,62 @@ class TestPastGameSessionViewSet:
         response = client.get("/api/games/past/")
 
         assert response.status_code == 200
-        assert len(response.data) == 1
+        assert len(response.data["results"]) == 1
+
+    def test_pagination_structure(self, game_session_factory, user_factory, profile_factory, adventure_factory):
+        adventure = adventure_factory()
+        game_session_factory.create_batch(
+            3, active=True, date=timezone.now().date() - timezone.timedelta(days=2), adventure=adventure
+        )
+
+        user = user_factory()
+        profile_factory(user=user)
+        client = APIClient()
+        client.force_authenticate(user=user)
+        response = client.get("/api/games/past/")
+
+        assert response.status_code == 200
+        assert "count" in response.data
+        assert "next" in response.data
+        assert "previous" in response.data
+        assert "results" in response.data
+        assert response.data["count"] == 3
+        assert response.data["next"] is None
+        assert response.data["previous"] is None
+        assert len(response.data["results"]) == 3
+
+    def test_pagination_limit_param(self, game_session_factory, user_factory, profile_factory, adventure_factory):
+        adventure = adventure_factory()
+        game_session_factory.create_batch(
+            5, active=True, date=timezone.now().date() - timezone.timedelta(days=2), adventure=adventure
+        )
+
+        user = user_factory()
+        profile_factory(user=user)
+        client = APIClient()
+        client.force_authenticate(user=user)
+        response = client.get("/api/games/past/?limit=2")
+
+        assert response.status_code == 200
+        assert response.data["count"] == 5
+        assert len(response.data["results"]) == 2
+        assert response.data["next"] is not None
+        assert response.data["previous"] is None
+
+    def test_pagination_offset_param(self, game_session_factory, user_factory, profile_factory, adventure_factory):
+        adventure = adventure_factory()
+        game_session_factory.create_batch(
+            5, active=True, date=timezone.now().date() - timezone.timedelta(days=2), adventure=adventure
+        )
+
+        user = user_factory()
+        profile_factory(user=user)
+        client = APIClient()
+        client.force_authenticate(user=user)
+        response = client.get("/api/games/past/?offset=2")
+
+        assert response.status_code == 200
+        assert response.data["count"] == 5
+        assert len(response.data["results"]) == 3
+        assert response.data["next"] is None
+        assert response.data["previous"] is not None
