@@ -21,8 +21,11 @@ export default class GamesStore {
     return this.api.fetchData('games/future');
   }
 
-  fetchPast(extraParams){
-    return this.api.fetchData('games/past', `ordering=-date,-time_end,-time_end&${extraParams}`);
+  fetchPast(extraParams, limit, offset){
+    let params = `ordering=-date,-time_end,-time_end&${extraParams}`;
+    if (limit) params += `&limit=${limit}`;
+    if (offset !== undefined) params += `&offset=${offset}`;
+    return this.api.fetchData('games/past', params);
   }
 
   fetchFutureForUser(id){

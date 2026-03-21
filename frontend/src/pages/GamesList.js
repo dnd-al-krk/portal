@@ -8,6 +8,7 @@ import Link from "react-router-dom/es/Link";
 import Switch from "@material-ui/core/Switch/Switch";
 import FormGroup from "@material-ui/core/FormGroup/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import Button from "@material-ui/core/Button/Button";
 import {BoolStorage} from "../common/PortalUtils"
 
 //upcoming games list /games
@@ -121,6 +122,13 @@ class PastGamesList extends React.Component {
     games: null,
     displayMyGames:     BoolStorage.get('selector_displayMyGames'),
     displayMyDMGames:   BoolStorage.get('selector_displayMyDMGames'),
+    pagination: {
+      count: 0,
+      next: null,
+      previous: null,
+      limit: 30,
+      offset: 0
+    }
   };
 
   common_selectors = {
@@ -128,7 +136,7 @@ class PastGamesList extends React.Component {
     'displayMyDMGames':['displayMyGames']
   }
 
-  fetchData = () => {
+  fetchData = (offset = 0) => {
     const user_id = this.props.portalStore.currentUser.profileID;
     let extraParams = ``;
     if(this.state.displayMyGames) {
@@ -137,11 +145,19 @@ class PastGamesList extends React.Component {
     if(this.state.displayMyDMGames) {
       extraParams += `dm__id=${user_id}&`
     }
+    const limit = this.state.pagination.limit;
     console.log('Update: ', this.state);
-    this.props.portalStore.games.fetchPast(extraParams).then((games) => {
+    this.props.portalStore.games.fetchPast(extraParams, limit, offset).then((response) => {
       this.setState({
-        games: games,
-        loading: false,
+        games: response.results,
+        pagination: {
+          count: response.count,
+          next: response.next,
+          previous: response.previous,
+          limit: limit,
+          offset: offset
+        },
+        loading: false
       })
     })
   };
@@ -150,14 +166,21 @@ class PastGamesList extends React.Component {
     this.setState({
       loading: true,
     });
-    this.fetchData();
+    this.fetchData(0);
   }
 
   handleChange = name => event => {
     var hash_of_state = {
       [name]: event.target.checked,
       loading: true,
-      games: null
+      games: null,
+      pagination: {
+        count: 0,
+        next: null,
+        previous: null,
+        limit: 30,
+        offset: 0
+      }
     };
     if (event.target.checked && this.common_selectors[name]) {
         for (var depend in this.common_selectors[name]) {
@@ -165,8 +188,48 @@ class PastGamesList extends React.Component {
             BoolStorage.set(this.common_selectors[name][depend],'selector',false)
         }
     }
-    this.setState(hash_of_state, () => this.fetchData());
+    this.setState(hash_of_state, () => this.fetchData(0));
     BoolStorage.set(name,'selector',event.target.checked);
+  };
+
+  handlePrevPage = () => {
+    if (this.state.pagination.previous) {
+      const urlParams = new URLSearchParams(this.state.pagination.previous.split('?')[1]);
+      const offset = parseInt(urlParams.get('offset')) || 0;
+      this.setState({loading: true, games: null}, () => this.fetchData(offset));
+    }
+  };
+
+  handleNextPage = () => {
+    if (this.state.pagination.next) {
+      const urlParams = new URLSearchParams(this.state.pagination.next.split('?')[1]);
+      const offset = parseInt(urlParams.get('offset')) || 0;
+      this.setState({loading: true, games: null}, () => this.fetchData(offset));
+    }
+  };
+
+  renderPaginationControls = () => {
+    const {count, next, previous, limit, offset} = this.state.pagination;
+    const startIndex = offset + 1;
+    const endIndex = Math.min(offset + limit, count);
+
+    if (count === 0) return null;
+
+    return (
+      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16}}>
+        <Typography variant='body2' color='textSecondary'>
+          Showing {startIndex}-{endIndex} of {count} games
+        </Typography>
+<div style={{display: 'flex', gap: 8}}>
+          <Button onClick={this.handlePrevPage} disabled={!previous} variant={previous ? 'contained' : 'outlined'} size='small' color='primary'>
+            Previous
+          </Button>
+          <Button onClick={this.handleNextPage} disabled={!next} variant={next ? 'contained' : 'outlined'} size='small' color='primary'>
+            Next
+          </Button>
+        </div>
+      </div>
+    );
   };
 
   render(){
@@ -181,6 +244,7 @@ class PastGamesList extends React.Component {
           <Typography variant='h5' className={classes.header}>
             Games archive
           </Typography>
+          {this.renderPaginationControls()}
           <FormGroup row className={classes.listFilters}>
             <FormControlLabel
               control={
@@ -212,6 +276,7 @@ class PastGamesList extends React.Component {
             of the ended game as a player or cancel booking on the slot that you already run as a Dungeon Master.
           </Typography>
           <Games list={this.state.games} />
+          {this.renderPaginationControls()}
         </div>
       )
   }

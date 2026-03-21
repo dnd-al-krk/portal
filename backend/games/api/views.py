@@ -1,5 +1,5 @@
 from django_filters import rest_framework as filters
-from rest_framework import mixins, status, viewsets
+from rest_framework import mixins, pagination, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
@@ -34,6 +34,7 @@ class GameSessionViewSet(
     search_fields = ("table__name", "dm__user__first_name", "dm__user__last_name", "dm__nickname", "adventure__title")
     ordering_fields = ("date", "time_end", "time_start")
     ordering = "date"
+    pagination_class = None
 
     @action(methods=["PUT"], detail=True)
     def signUp(self, request, *args, **kwargs):
@@ -93,13 +94,26 @@ class GameSessionViewSet(
 
 
 class FutureGameSessionViewSet(GameSessionViewSet):
+    pagination_class = None
+
     def get_queryset(self):
         return GameSession.games.future()
 
 
 class PastGameSessionViewSet(GameSessionViewSet):
+    pagination_class = pagination.LimitOffsetPagination
+
     def get_queryset(self):
         return GameSession.games.past().exclude(adventure=None)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class GameSessionBookViewSet(mixins.UpdateModelMixin, viewsets.GenericViewSet):
