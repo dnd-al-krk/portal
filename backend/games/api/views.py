@@ -1,3 +1,4 @@
+from django.db import transaction
 from django_filters import rest_framework as filters
 from rest_framework import mixins, pagination, status, viewsets
 from rest_framework.decorators import action
@@ -46,15 +47,18 @@ class GameSessionViewSet(
         except (PlayerCharacter.DoesNotExist, KeyError):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        if not instance.can_sign_up(profile):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
         if character.dead:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        signup, _ = GameSessionPlayerSignUp.objects.get_or_create(game=instance, player=profile)
-        signup.character = character
-        signup.save(update_fields=["character"])
+        with transaction.atomic():
+            instance = self.get_queryset().select_for_update().get(pk=instance.pk)
+
+            if not instance.can_sign_up(profile):
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+
+            signup, _ = GameSessionPlayerSignUp.objects.get_or_create(game=instance, player=profile)
+            signup.character = character
+            signup.save(update_fields=["character"])
 
         return Response()
 
