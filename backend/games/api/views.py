@@ -1,7 +1,9 @@
+from django.db import transaction
 from django_filters import rest_framework as filters
 from rest_framework import mixins, pagination, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -38,7 +40,6 @@ class GameSessionViewSet(
 
     @action(methods=["PUT"], detail=True)
     def signUp(self, request, *args, **kwargs):
-        instance = self.get_object()
         profile = request.user.profile
         try:
             character_id = request.data["character_id"]
@@ -46,15 +47,18 @@ class GameSessionViewSet(
         except (PlayerCharacter.DoesNotExist, KeyError):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        if not instance.can_sign_up(profile):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
         if character.dead:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        signup, _ = GameSessionPlayerSignUp.objects.get_or_create(game=instance, player=profile)
-        signup.character = character
-        signup.save(update_fields=["character"])
+        with transaction.atomic():
+            instance = get_object_or_404(self.get_queryset().select_for_update(), pk=self.kwargs["pk"])
+
+            if not instance.can_sign_up(profile):
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+
+            signup, _ = GameSessionPlayerSignUp.objects.get_or_create(game=instance, player=profile)
+            signup.character = character
+            signup.save(update_fields=["character"])
 
         return Response()
 
