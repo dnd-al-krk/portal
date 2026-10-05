@@ -18,6 +18,7 @@ class Command(BaseCommand):
         self.create_tables("Online")
         self.create_tables("Other (see additional info)")
         self.create_tables("Carcossa", dow=5)
+        self.create_tables("Carcossa", dow=6)
         self.create_tables("Innsmouth", dow=2)
         self.create_tables("Uniwersytet Miskatonik", dow=4)
 
